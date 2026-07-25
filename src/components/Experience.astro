@@ -1,110 +1,74 @@
 ---
-import { portfolio } from '../data/portfolio';
+import { siteConfig } from "../config";
+const hasExperience = siteConfig.experience && siteConfig.experience.length > 0;
 ---
 
-<section id="experience" class="section section--subtle">
-  <div class="container reveal">
-    <p class="section__eyebrow">02 — Experience</p>
-    <h2 class="section__title">Where I've worked</h2>
+{
+  hasExperience && (
+    <section id="experience" class="p-8 sm:p-12 md:p-16 lg:p-24">
+      <div>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
+          <div class="lg:col-span-4">
+            <h2 class="text-3xl sm:text-4xl md:text-5xl xl:text-7xl font-bold text-gray-900">
+              Experience
+            </h2>
+            <div
+              class="w-[75px] h-[5px] mt-2 rounded-full"
+              style={`background-color: ${siteConfig.accentColor}`}
+            />
+          </div>
 
-    <ol class="timeline">
-      {
-        portfolio.experience.map((job) => (
-          <li class="timeline__item">
-            <div class="timeline__dot" aria-hidden="true" />
-            <div class="timeline__card card">
-              <div class="timeline__head">
-                <h3 class="timeline__role">
-                  {job.role} <span class="timeline__at">@ {job.company}</span>
-                </h3>
-                <span class="timeline__date">
-                  {job.start} — {job.end}
-                </span>
-              </div>
-              {job.location && <p class="timeline__loc text-muted">{job.location}</p>}
-              {job.summary && <p class="timeline__summary text-muted">{job.summary}</p>}
-              <ul class="timeline__list">
-                {job.highlights.map((h) => (
-                  <li>{h}</li>
-                ))}
-              </ul>
+          <div class="lg:col-span-8">
+            <div class="relative">
+              {siteConfig.experience.map((exp, index) => (
+                <div class="relative mb-12 last:mb-0">
+                  {/* Timeline dot at top of card */}
+                  <div
+                    class="absolute left-1/2 -top-2 w-4 h-4 bg-white border-2 rounded-full -translate-x-1/2 z-20 transition-all duration-300"
+                    style={`border-color: ${siteConfig.accentColor}; background-color: ${siteConfig.accentColor}`}
+                  />
+
+                  {/* Connecting line below card */}
+                  {index < siteConfig.experience.length - 1 && (
+                    <div class="absolute left-1/2 bottom-0 w-0.5 h-12 bg-gray-300 -translate-x-1/2 translate-y-full z-10" />
+                  )}
+
+                  {/* Experience card */}
+                  <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-4 sm:p-5 md:p-6 hover:shadow-md transition-shadow duration-300">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
+                      <div>
+                        <h3 class="text-lg sm:text-xl font-semibold text-gray-900">
+                          {exp.title}
+                        </h3>
+                        <p
+                          class="text-base sm:text-lg"
+                          style={`color: ${siteConfig.accentColor}`}
+                        >
+                          {exp.company}
+                        </p>
+                      </div>
+                      <span class="text-xs sm:text-sm text-gray-500 mt-2 sm:mt-0">
+                        {exp.dateRange}
+                      </span>
+                    </div>
+
+                    <ul class="space-y-2">
+                      {exp.bullets.map((bullet) => (
+                        <li class="flex items-start">
+                          <span class="inline-block w-1.5 h-1.5 rounded-full bg-gray-400 mt-2 mr-3 flex-shrink-0" />
+                          <span class="text-sm sm:text-base text-gray-600">
+                            {bullet}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              ))}
             </div>
-          </li>
-        ))
-      }
-    </ol>
-  </div>
-</section>
-
-<style>
-  .timeline {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    position: relative;
-  }
-  .timeline::before {
-    content: '';
-    position: absolute;
-    left: 7px;
-    top: 6px;
-    bottom: 6px;
-    width: 2px;
-    background: var(--border);
-  }
-  .timeline__item {
-    position: relative;
-    padding-left: 2.25rem;
-    margin-bottom: 1.5rem;
-  }
-  .timeline__item:last-child {
-    margin-bottom: 0;
-  }
-  .timeline__dot {
-    position: absolute;
-    left: 0;
-    top: 1.4rem;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background: var(--accent);
-    border: 3px solid var(--bg-subtle);
-  }
-  .timeline__card {
-    padding: 1.25rem 1.5rem;
-  }
-  .timeline__head {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-  .timeline__role {
-    font-size: 1.15rem;
-    margin: 0;
-  }
-  .timeline__at {
-    color: var(--accent);
-  }
-  .timeline__date {
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
-    color: var(--text-faint);
-    white-space: nowrap;
-  }
-  .timeline__loc {
-    margin: 0.15rem 0 0.5rem;
-    font-size: 0.9rem;
-  }
-  .timeline__summary {
-    margin: 0 0 0.75rem;
-  }
-  .timeline__list {
-    margin: 0;
-    padding-left: 1.1rem;
-    color: var(--text-muted);
-    display: grid;
-    gap: 0.35rem;
-  }
-</style>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}

@@ -1,98 +1,104 @@
 ---
-import { portfolio } from '../data/portfolio';
-import Icon from './Icon.astro';
+import { siteConfig } from "../config";
+const hasProjects = siteConfig.projects && siteConfig.projects.length > 0;
 ---
 
-<section id="projects" class="section section--subtle">
-  <div class="container reveal">
-    <p class="section__eyebrow">04 — Projects</p>
-    <h2 class="section__title">Things I've built</h2>
+{
+  hasProjects && (
+    <section id="projects" class="p-8 sm:p-12 md:p-16 lg:p-24">
+      <div>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
+          <div class="lg:col-span-4">
+            <h2 class="text-3xl sm:text-4xl md:text-5xl xl:text-7xl font-bold text-gray-900">
+              Projects
+            </h2>
+            <div
+              class="w-[75px] h-[5px] mt-2 rounded-full"
+              style={`background-color: ${siteConfig.accentColor}`}
+            />
+          </div>
 
-    <div class="projects__grid">
-      {
-        portfolio.projects.map((project) => (
-          <article class="project card">
-            <div class="project__body">
-              <div class="project__top">
-                <Icon name="website" size={26} class="project__folder" />
-                <div class="project__links">
-                  {project.links.map((link) => (
-                    <a href={link.href} aria-label={`${project.name} — ${link.label}`} target="_blank" rel="noopener noreferrer">
-                      {link.label === 'Code' ? <Icon name="github" size={18} /> : <Icon name="website" size={18} />}
-                    </a>
-                  ))}
-                </div>
-              </div>
-              <h3 class="project__name">{project.name}</h3>
-              <p class="project__desc text-muted">{project.description}</p>
+          <div class="lg:col-span-8">
+            <div class="space-y-8">
+              {siteConfig.projects.map((project, index) => {
+                const Component = project.link ? "a" : "div";
+                const linkProps = project.link
+                  ? {
+                      href: project.link,
+                      target: "_blank",
+                      rel: "noopener noreferrer",
+                    }
+                  : {};
+
+                return (
+                  <div class="group relative">
+                    <Component
+                      {...linkProps}
+                      class={`block relative p-4 sm:p-6 md:p-8 bg-gray-50 rounded-xl sm:rounded-2xl border border-gray-200 transition-all duration-300 ${
+                        project.link
+                          ? "hover:bg-white hover:shadow-xl hover:border-gray-300 hover:-translate-y-1"
+                          : ""
+                      }`}
+                    >
+                      {project.link && (
+                        <div class="absolute top-4 right-4 sm:top-6 sm:right-6 md:top-8 md:right-8 w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 flex items-center justify-center bg-gray-900 rounded-full text-white transition-all duration-300 group-hover:bg-gray-700">
+                          <svg
+                            class="w-4 h-4 sm:w-4.5 sm:h-4.5 md:w-5 md:h-5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M7 17L17 7M17 7H7M17 7V17"
+                            />
+                          </svg>
+                        </div>
+                      )}
+
+                      <div class="space-y-4">
+                        <div>
+                          <span
+                            class="text-sm font-mono"
+                            style={{ color: siteConfig.accentColor }}
+                          >
+                            0{index + 1}
+                          </span>
+                          <h3 class="text-xl sm:text-2xl font-bold text-gray-900 mt-1">
+                            {project.name}
+                          </h3>
+                        </div>
+
+                        <p
+                          class={`text-base sm:text-lg text-gray-600 leading-relaxed ${project.link ? "pr-12 sm:pr-14 md:pr-16" : ""}`}
+                        >
+                          {project.description}
+                        </p>
+
+                        {project.skills && project.skills.length > 0 && (
+                          <div class="flex flex-wrap gap-1.5 sm:gap-2 pt-2">
+                            {project.skills.map((skill) => (
+                              <span
+                                class={`px-2.5 sm:px-3 py-1 sm:py-1.5 bg-gray-900 text-white rounded-md sm:rounded-lg text-xs sm:text-sm font-medium transition-all duration-300 ${
+                                  project.link ? "group-hover:bg-gray-800" : ""
+                                }`}
+                              >
+                                {skill}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </Component>
+                  </div>
+                );
+              })}
             </div>
-            <ul class="project__tech">
-              {project.tech.map((t) => (
-                <li>{t}</li>
-              ))}
-            </ul>
-          </article>
-        ))
-      }
-    </div>
-  </div>
-</section>
-
-<style>
-  .projects__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
-    gap: 1.25rem;
-  }
-  .project {
-    display: flex;
-    flex-direction: column;
-    padding: 1.5rem;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
-  }
-  .project:hover {
-    transform: translateY(-4px);
-  }
-  .project__body {
-    flex: 1;
-  }
-  .project__top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 1rem;
-  }
-  .project__folder {
-    color: var(--accent);
-  }
-  .project__links {
-    display: flex;
-    gap: 0.5rem;
-  }
-  .project__links a {
-    display: inline-flex;
-    color: var(--text-muted);
-  }
-  .project__links a:hover {
-    color: var(--accent);
-  }
-  .project__name {
-    font-size: 1.2rem;
-    margin: 0 0 0.5rem;
-  }
-  .project__desc {
-    font-size: 0.95rem;
-    margin: 0;
-  }
-  .project__tech {
-    list-style: none;
-    margin: 1.25rem 0 0;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
-    color: var(--text-faint);
-  }
-</style>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}

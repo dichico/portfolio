@@ -1,14 +1,15 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
-import sitemap from '@astrojs/sitemap';
+import { defineConfig } from "astro/config";
+import tailwindcss from "@tailwindcss/vite";
+import sitemap from "@astrojs/sitemap";
 
-// Deployment: GitHub Pages project repo served via the custom domain
-// https://portfolio.dichico.com/ . A custom domain serves the site at the
-// ROOT, so `base` is '/' (not '/portfolio/'). The domain is pinned by
-// public/CNAME so Actions deploys keep it configured.
+// Served at the root of a custom domain (portfolio.dichico.com), so `base`
+// stays default ('/'). `site` is used for canonical URLs + sitemap.
+// https://astro.build/config
 export default defineConfig({
-  site: 'https://portfolio.dichico.com',
-  base: '/',
+  site: "https://portfolio.dichico.com",
   integrations: [sitemap()],
-  compressHTML: true,
+  vite: {
+    plugins: [tailwindcss()],
+  },
 });
