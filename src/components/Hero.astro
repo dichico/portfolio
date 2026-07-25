@@ -1,6 +1,14 @@
 ---
 import { portfolio } from '../data/portfolio';
 import Icon from './Icon.astro';
+
+const base = import.meta.env.BASE_URL;
+const resumeHref =
+  portfolio.resumeUrl && /^https?:/.test(portfolio.resumeUrl)
+    ? portfolio.resumeUrl
+    : portfolio.resumeUrl
+      ? base.replace(/\/$/, '') + '/' + portfolio.resumeUrl.replace(/^\//, '')
+      : undefined;
 ---
 
 <section id="top" class="hero">
@@ -13,8 +21,8 @@ import Icon from './Icon.astro';
     <div class="hero__actions">
       <a class="btn btn--primary" href="#contact">Get in touch</a>
       {
-        portfolio.resumeUrl && (
-          <a class="btn btn--ghost" href={portfolio.resumeUrl} target="_blank" rel="noopener noreferrer">
+        resumeHref && (
+          <a class="btn btn--ghost" href={resumeHref} target="_blank" rel="noopener noreferrer">
             Resume
           </a>
         )
