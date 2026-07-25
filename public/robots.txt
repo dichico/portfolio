@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://dichico.github.io/portfolio/sitemap-index.xml
+Sitemap: https://portfolio.dichico.com/sitemap-index.xml

@@ -2,15 +2,13 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
-// Current deployment: GitHub Pages project site at
-// https://dichico.github.io/portfolio/  → `base` must be '/portfolio/'.
-//
-// If you later point a custom domain (e.g. via Cloudflare) at the ROOT of the
-// site, change `site` to 'https://yourdomain.com' and `base` back to '/',
-// and re-add public/CNAME with your domain.
+// Deployment: GitHub Pages project repo served via the custom domain
+// https://portfolio.dichico.com/ . A custom domain serves the site at the
+// ROOT, so `base` is '/' (not '/portfolio/'). The domain is pinned by
+// public/CNAME so Actions deploys keep it configured.
 export default defineConfig({
-  site: 'https://dichico.github.io',
-  base: '/portfolio/',
+  site: 'https://portfolio.dichico.com',
+  base: '/',
   integrations: [sitemap()],
   compressHTML: true,
 });
