@@ -1,9 +1,8 @@
 // ---------------------------------------------------------------------------
 // PORTFOLIO CONTENT — EDIT THIS FILE
 // ---------------------------------------------------------------------------
-// Everything the site displays lives here. Replace the placeholder text with
-// your real details (name, bio, experience, skills, projects, education,
-// contact links). No other files need to change to update your content.
+// Everything the site displays lives here. Update these values to change the
+// site content — no other files need editing.
 // ---------------------------------------------------------------------------
 
 export interface SocialLink {
@@ -40,7 +39,8 @@ export interface EducationItem {
   degree: string;
   institution: string;
   location?: string;
-  start: string;
+  /** Optional. Omit to show a single year (uses `end`). */
+  start?: string;
   end: string;
   details?: string;
 }
@@ -68,109 +68,134 @@ export interface Portfolio {
 }
 
 export const portfolio: Portfolio = {
-  name: 'Your Name',
-  headline: 'Software Engineer',
+  name: 'Diogo Costa',
+  headline: 'DevOps Cloud Platform Engineer',
   tagline:
-    'I build reliable, well-crafted software — from data pipelines to polished user experiences.',
-  location: 'City, Country',
-  email: 'you@example.com',
-  resumeUrl: '/resume.pdf',
+    'Building reliable, scalable developer infrastructure at Critical TechWorks for the BMW Group.',
+  location: 'Porto, Portugal',
+  email: 'developer@dichico.com',
 
   about: [
-    'This is placeholder text. Write a short, friendly introduction here — who you are, what you focus on, and what you care about as an engineer.',
-    'Add a second paragraph with a bit of personality: your interests, the kinds of problems you like to solve, or what you are currently learning.',
+    "I'm a DevOps Cloud Platform Engineer at Critical TechWorks, working with the BMW Group on Orbit — a large-scale, multi-cluster Kubernetes environment that powers cloud connectivity for BMW vehicles. I build and operate distributed microservices and enterprise-grade CI/CD infrastructure that runs over 100,000 workflow jobs per day.",
+    "I hold an Integrated Master's in Informatics Engineering from the University of Minho, where I specialized in Data Engineering and Cybersecurity. Before CTW, I trained at SONAE MC building cloud and big-data platforms on Azure. I work daily with AWS, Kubernetes, MongoDB Atlas and GitHub Enterprise, and I'm also a certified Scrum Master.",
   ],
 
   socials: [
-    { label: 'GitHub', href: 'https://github.com/yourusername', icon: 'github' },
-    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/yourusername', icon: 'linkedin' },
-    { label: 'Email', href: 'mailto:you@example.com', icon: 'email' },
+    { label: 'GitHub', href: 'https://github.com/dichico', icon: 'github' },
+    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/dichico', icon: 'linkedin' },
+    { label: 'Email', href: 'mailto:developer@dichico.com', icon: 'email' },
   ],
 
   experience: [
     {
-      role: 'Senior Software Engineer',
-      company: 'Company Name',
-      location: 'City, Country',
-      start: '2023',
+      role: 'DevOps Cloud Platform Engineer',
+      company: 'Critical TechWorks · BMW Group',
+      location: 'Porto, Portugal',
+      start: 'Dec 2023',
       end: 'Present',
-      summary: 'One-line summary of your role and the team/product.',
+      summary:
+        'Part of the Orbit Platform team, running a multi-cluster Kubernetes environment that powers cloud connectivity for BMW vehicles and supports hundreds of internal microservices.',
       highlights: [
-        'Placeholder achievement — describe an impactful project and the result.',
-        'Placeholder achievement — mention scale, metrics, or technologies used.',
-        'Placeholder achievement — highlight collaboration or leadership.',
+        'Operate and scale Orbit\u2019s multi-cluster Kubernetes platform for cloud-connected vehicle services.',
+        'Run a global CI/CD service on GitHub Enterprise and self-hosted runners executing 100k+ workflow jobs/day with runner availability under 10 seconds.',
+        'Build and maintain distributed microservices in NestJS, optimized for resiliency and observability.',
+        'Manage high-throughput self-hosted runner infrastructure on AWS and MongoDB Atlas for distributed, high-availability data.',
+        'Support GitHub Enterprise adoption, best practices and platform integration across BMW.',
       ],
     },
     {
-      role: 'Software Engineer',
-      company: 'Previous Company',
-      location: 'City, Country',
-      start: '2020',
-      end: '2023',
+      role: 'Data, Cloud & DevOps Engineer',
+      company: 'SONAE MC',
+      location: 'Maia, Porto, Portugal',
+      start: 'Jul 2023',
+      end: 'Nov 2023',
       highlights: [
-        'Placeholder achievement — what you shipped and why it mattered.',
-        'Placeholder achievement — a technical challenge you solved.',
+        'Built and managed Data Lakes, Data Hubs, Databricks and Data Factories on Microsoft Azure.',
+        'Worked with Cloudera Hadoop across both cloud and on-premise environments.',
+        'Developed custom CI/CD solutions with Terraform, the Azure SDK, Python and GitHub Actions to speed up cloud resource delivery.',
+      ],
+    },
+    {
+      role: 'Big Data Engineer',
+      company: 'SONAE MC',
+      location: 'Maia, Porto, Portugal',
+      start: 'Sep 2022',
+      end: 'May 2023',
+      highlights: [
+        'Traineeship focused on developing and demonstrating skills across the Big Data area.',
+        'Worked with petabyte-scale data solutions supporting SONAE\u2019s businesses.',
       ],
     },
   ],
 
   skills: [
-    { category: 'Languages', items: ['TypeScript', 'Python', 'Go', 'SQL'] },
-    { category: 'Frameworks', items: ['Astro', 'React', 'Node.js', 'FastAPI'] },
-    { category: 'Cloud & DevOps', items: ['AWS', 'Docker', 'Kubernetes', 'GitHub Actions'] },
-    { category: 'Data', items: ['PostgreSQL', 'Redis', 'ETL', 'BigQuery'] },
+    { category: 'Languages', items: ['Python', 'SQL', 'TypeScript', 'NoSQL'] },
+    {
+      category: 'Cloud & DevOps',
+      items: ['AWS', 'Microsoft Azure', 'Kubernetes', 'Terraform', 'GitHub Actions', 'GitHub Enterprise', 'CI/CD'],
+    },
+    {
+      category: 'Data',
+      items: ['MongoDB Atlas', 'Databricks', 'Azure Data Factory', 'Data Lakes', 'ETL', 'Cloudera Hadoop'],
+    },
+    {
+      category: 'Frameworks & Practices',
+      items: ['NestJS', 'Agile', 'Scrum', 'Cryptography'],
+    },
+    {
+      category: 'Certifications',
+      items: ['Azure Fundamentals', 'Professional Scrum Master I (PSM I)', 'GitHub Actions', 'Developing Android Apps'],
+    },
   ],
 
   projects: [
     {
-      name: 'Project One',
+      name: 'Orbit — Connected-Vehicle Cloud Platform',
       description:
-        'Placeholder description of a project you are proud of. Explain the problem it solves and your role.',
-      tech: ['TypeScript', 'Astro', 'PostgreSQL'],
-      links: [
-        { label: 'Live', href: 'https://example.com' },
-        { label: 'Code', href: 'https://github.com/yourusername/project-one' },
-      ],
+        'Multi-cluster Kubernetes platform powering cloud connectivity for BMW vehicles, with an enterprise CI/CD service running 100k+ workflow jobs per day for thousands of engineering teams.',
+      tech: ['Kubernetes', 'NestJS', 'AWS', 'MongoDB Atlas', 'GitHub Enterprise'],
+      links: [{ label: 'Visit', href: 'https://www.criticaltechworks.com' }],
       featured: true,
     },
     {
-      name: 'Project Two',
+      name: 'SONAE Data & Cloud Platform',
       description:
-        'Placeholder description. Highlight an interesting technical detail or the impact it had.',
-      tech: ['Python', 'FastAPI', 'Docker'],
-      links: [{ label: 'Code', href: 'https://github.com/yourusername/project-two' }],
+        'Azure-based data platform (Data Lakes, Databricks, Data Factory) plus custom CI/CD tooling in Terraform and GitHub Actions to accelerate cloud resource delivery across SONAE.',
+      tech: ['Azure', 'Databricks', 'Terraform', 'Python', 'GitHub Actions'],
+      links: [],
       featured: true,
     },
     {
-      name: 'Project Three',
-      description: 'Placeholder description of another notable project.',
-      tech: ['Go', 'Kubernetes'],
-      links: [{ label: 'Code', href: 'https://github.com/yourusername/project-three' }],
+      name: 'Open Source & Experiments',
+      description:
+        'Side projects and experiments across cloud, data and web — explore my public work on GitHub.',
+      tech: ['TypeScript', 'Python', 'Astro'],
+      links: [{ label: 'Code', href: 'https://github.com/dichico' }],
     },
   ],
 
   education: [
     {
-      degree: 'M.Sc. in Computer Science',
-      institution: 'University Name',
-      location: 'City, Country',
-      start: '2018',
-      end: '2020',
-      details: 'Optional: thesis topic, specialization, or notable coursework.',
+      degree: 'Integrated Master\u2019s (M.Sc.) in Informatics Engineering',
+      institution: 'University of Minho',
+      location: 'Braga, Portugal',
+      start: '2015',
+      end: '2021',
+      details:
+        'Specialized in Software Development, Databases and Cyber-security, with a focus on Data Engineering and Cryptography.',
     },
     {
-      degree: 'B.Sc. in Computer Science',
-      institution: 'University Name',
-      location: 'City, Country',
-      start: '2015',
-      end: '2018',
+      degree: 'Secondary Education — Sciences and Technologies',
+      institution: 'Escola Secundária de Maximinos',
+      location: 'Braga, Portugal',
+      end: '2015',
     },
   ],
 
   seo: {
-    title: 'Your Name — Software Engineer',
+    title: 'Diogo Costa — DevOps Cloud Platform Engineer',
     description:
-      'Portfolio of Your Name, a software engineer building reliable, well-crafted software.',
+      'Diogo Costa is a DevOps Cloud Platform Engineer at Critical TechWorks (BMW Group), building reliable, scalable developer infrastructure with Kubernetes, AWS and CI/CD.',
     ogImage: '/og-image.svg',
   },
 };

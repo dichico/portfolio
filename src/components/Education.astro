@@ -14,7 +14,7 @@ import { portfolio } from '../data/portfolio';
             <div class="edu__head">
               <h3 class="edu__degree">{e.degree}</h3>
               <span class="edu__date">
-                {e.start} — {e.end}
+                {e.start ? `${e.start} — ${e.end}` : e.end}
               </span>
             </div>
             <p class="edu__inst">

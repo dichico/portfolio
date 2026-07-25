@@ -10,7 +10,7 @@
     <rect x="0" y="0" width="70" height="70" rx="16" fill="#3b5bdb"/>
     <text x="35" y="48" font-family="ui-monospace, Menlo, monospace" font-size="34" fill="#ffffff" text-anchor="middle" font-weight="700">&lt;/&gt;</text>
   </g>
-  <text x="90" y="330" font-family="ui-sans-serif, system-ui, Segoe UI, Roboto, sans-serif" font-size="86" fill="#e8ebef" font-weight="700">Your Name</text>
-  <text x="90" y="410" font-family="ui-sans-serif, system-ui, Segoe UI, Roboto, sans-serif" font-size="44" fill="#7c9bff" font-weight="600">Software Engineer</text>
-  <text x="90" y="480" font-family="ui-sans-serif, system-ui, Segoe UI, Roboto, sans-serif" font-size="30" fill="#9aa4b2">Building reliable, well-crafted software.</text>
+  <text x="90" y="330" font-family="ui-sans-serif, system-ui, Segoe UI, Roboto, sans-serif" font-size="86" fill="#e8ebef" font-weight="700">Diogo Costa</text>
+  <text x="90" y="410" font-family="ui-sans-serif, system-ui, Segoe UI, Roboto, sans-serif" font-size="42" fill="#7c9bff" font-weight="600">DevOps Cloud Platform Engineer</text>
+  <text x="90" y="480" font-family="ui-sans-serif, system-ui, Segoe UI, Roboto, sans-serif" font-size="30" fill="#9aa4b2">Critical TechWorks · BMW Group</text>
 </svg>
