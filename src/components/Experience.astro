@@ -1,0 +1,110 @@
+---
+import { portfolio } from '../data/portfolio';
+---
+
+<section id="experience" class="section section--subtle">
+  <div class="container reveal">
+    <p class="section__eyebrow">02 — Experience</p>
+    <h2 class="section__title">Where I've worked</h2>
+
+    <ol class="timeline">
+      {
+        portfolio.experience.map((job) => (
+          <li class="timeline__item">
+            <div class="timeline__dot" aria-hidden="true" />
+            <div class="timeline__card card">
+              <div class="timeline__head">
+                <h3 class="timeline__role">
+                  {job.role} <span class="timeline__at">@ {job.company}</span>
+                </h3>
+                <span class="timeline__date">
+                  {job.start} — {job.end}
+                </span>
+              </div>
+              {job.location && <p class="timeline__loc text-muted">{job.location}</p>}
+              {job.summary && <p class="timeline__summary text-muted">{job.summary}</p>}
+              <ul class="timeline__list">
+                {job.highlights.map((h) => (
+                  <li>{h}</li>
+                ))}
+              </ul>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .timeline {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 6px;
+    bottom: 6px;
+    width: 2px;
+    background: var(--border);
+  }
+  .timeline__item {
+    position: relative;
+    padding-left: 2.25rem;
+    margin-bottom: 1.5rem;
+  }
+  .timeline__item:last-child {
+    margin-bottom: 0;
+  }
+  .timeline__dot {
+    position: absolute;
+    left: 0;
+    top: 1.4rem;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 3px solid var(--bg-subtle);
+  }
+  .timeline__card {
+    padding: 1.25rem 1.5rem;
+  }
+  .timeline__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .timeline__role {
+    font-size: 1.15rem;
+    margin: 0;
+  }
+  .timeline__at {
+    color: var(--accent);
+  }
+  .timeline__date {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--text-faint);
+    white-space: nowrap;
+  }
+  .timeline__loc {
+    margin: 0.15rem 0 0.5rem;
+    font-size: 0.9rem;
+  }
+  .timeline__summary {
+    margin: 0 0 0.75rem;
+  }
+  .timeline__list {
+    margin: 0;
+    padding-left: 1.1rem;
+    color: var(--text-muted);
+    display: grid;
+    gap: 0.35rem;
+  }
+</style>

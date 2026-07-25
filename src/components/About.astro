@@ -1,0 +1,25 @@
+---
+import { portfolio } from '../data/portfolio';
+---
+
+<section id="about" class="section">
+  <div class="container reveal">
+    <p class="section__eyebrow">01 — About</p>
+    <h2 class="section__title">About me</h2>
+    <div class="about__body">
+      {portfolio.about.map((p) => <p class="text-muted">{p}</p>)}
+      <p class="about__meta text-muted">📍 {portfolio.location}</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about__body {
+    max-width: 46rem;
+    font-size: 1.05rem;
+  }
+  .about__meta {
+    margin-top: 0.5rem;
+    font-size: 0.95rem;
+  }
+</style>

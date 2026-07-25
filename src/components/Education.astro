@@ -1,0 +1,66 @@
+---
+import { portfolio } from '../data/portfolio';
+---
+
+<section id="education" class="section">
+  <div class="container reveal">
+    <p class="section__eyebrow">05 — Education</p>
+    <h2 class="section__title">Education</h2>
+
+    <div class="edu__list">
+      {
+        portfolio.education.map((e) => (
+          <div class="edu__item card">
+            <div class="edu__head">
+              <h3 class="edu__degree">{e.degree}</h3>
+              <span class="edu__date">
+                {e.start} — {e.end}
+              </span>
+            </div>
+            <p class="edu__inst">
+              {e.institution}
+              {e.location && <span class="text-muted"> · {e.location}</span>}
+            </p>
+            {e.details && <p class="edu__details text-muted">{e.details}</p>}
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .edu__list {
+    display: grid;
+    gap: 1rem;
+  }
+  .edu__item {
+    padding: 1.25rem 1.5rem;
+  }
+  .edu__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .edu__degree {
+    font-size: 1.1rem;
+    margin: 0;
+  }
+  .edu__date {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--text-faint);
+    white-space: nowrap;
+  }
+  .edu__inst {
+    margin: 0.35rem 0 0;
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .edu__details {
+    margin: 0.5rem 0 0;
+    font-size: 0.95rem;
+  }
+</style>
