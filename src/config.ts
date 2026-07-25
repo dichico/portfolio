@@ -1,8 +1,8 @@
 export const siteConfig = {
-  name: "Diogo Costa",
+  name: "Diogo Francisco Costa",
   title: "DevOps Cloud Platform Engineer",
   description:
-    "Portfolio of Diogo Costa — DevOps Cloud Platform Engineer at Critical TechWorks (BMW Group), building reliable, scalable developer infrastructure with Kubernetes, AWS and CI/CD.",
+    "Portfolio of Diogo Francisco Costa — DevOps Cloud Platform Engineer at Critical TechWorks (BMW Group), building reliable, scalable developer infrastructure with Kubernetes, AWS and CI/CD.",
   accentColor: "#3b5bdb",
   social: {
     email: "developer@dichico.com",
