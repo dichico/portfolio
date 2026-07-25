@@ -150,11 +150,16 @@ export const portfolio: Portfolio = {
 
   projects: [
     {
-      name: 'Orbit — Connected-Vehicle Cloud Platform',
+      name: "BMW Group's CI/CD Modernization",
       description:
-        'Multi-cluster Kubernetes platform powering cloud connectivity for BMW vehicles, with an enterprise CI/CD service running 100k+ workflow jobs per day for thousands of engineering teams.',
-      tech: ['Kubernetes', 'NestJS', 'AWS', 'MongoDB Atlas', 'GitHub Enterprise'],
-      links: [{ label: 'Visit', href: 'https://www.criticaltechworks.com' }],
+        'Cloud Developer Platform (CDP) — internally known as Orbit Spaceship — facilitates over 130,000 builds and deployments daily, supporting 1,300+ microservices across hundreds of AWS accounts spanning multiple regions worldwide. It provides 50 reusable CI/CD building blocks to over 3,000 developers, enabling seamless integration, simplified maintenance and easy adoption of new features.',
+      tech: ['AWS', 'Kubernetes', 'CI/CD', 'NestJS', 'GitHub Enterprise'],
+      links: [
+        {
+          label: 'Read',
+          href: 'https://aws.amazon.com/blogs/migration-and-modernization/an-engine-of-efficiency-bmw-groups-ci-cd-modernization-journey-with-aws/',
+        },
+      ],
       featured: true,
     },
     {
