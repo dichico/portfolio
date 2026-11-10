@@ -1,9 +1,10 @@
+export type LineId = "cloud" | "k8s" | "cicd" | "data";
+
 export const siteConfig = {
   name: "Diogo Francisco Costa",
   title: "DevOps Cloud Platform Engineer",
   description:
     "Portfolio of Diogo Francisco Costa — DevOps Cloud Platform Engineer at Critical TechWorks (BMW Group), building reliable, scalable developer infrastructure with Kubernetes, AWS and CI/CD.",
-  accentColor: "#3b5bdb",
   social: {
     email: "developer@dichico.com",
     linkedin: "https://www.linkedin.com/in/dichico",
@@ -32,6 +33,7 @@ export const siteConfig = {
         "Cloud Developer Platform (CDP) — internally known as Orbit Spaceship — facilitates over 130,000 builds and deployments daily, supporting 1,300+ microservices across hundreds of AWS accounts spanning multiple regions worldwide. It provides 50 reusable CI/CD building blocks to over 3,000 developers, enabling seamless integration, simplified maintenance and easy adoption of new features.",
       link: "https://aws.amazon.com/blogs/migration-and-modernization/an-engine-of-efficiency-bmw-groups-ci-cd-modernization-journey-with-aws/",
       skills: ["AWS", "Kubernetes", "CI/CD", "NestJS", "GitHub Enterprise"],
+      lines: ["cloud", "k8s", "cicd"] as LineId[],
     },
     {
       name: "SONAE Data & Cloud Platform",
@@ -39,6 +41,7 @@ export const siteConfig = {
         "Azure-based data platform (Data Lakes, Databricks, Data Factory) plus custom CI/CD tooling in Terraform and GitHub Actions to accelerate cloud resource delivery across SONAE's businesses.",
       link: "https://github.com/dichico",
       skills: ["Azure", "Databricks", "Terraform", "Python"],
+      lines: ["cloud", "cicd", "data"] as LineId[],
     },
     {
       name: "Open Source & Experiments",
@@ -46,6 +49,7 @@ export const siteConfig = {
         "Side projects and experiments across cloud, data and web — explore my public work on GitHub.",
       link: "https://github.com/dichico",
       skills: ["TypeScript", "Python", "Astro"],
+      lines: [] as LineId[],
     },
   ],
   experience: [
@@ -53,6 +57,17 @@ export const siteConfig = {
       company: "Critical TechWorks · BMW Group",
       title: "DevOps Cloud Platform Engineer",
       dateRange: "Dec 2023 - Present",
+      lines: ["cloud", "k8s", "cicd"] as LineId[],
+      // Platform-sign figures, restated from the CDP project and the bullets below.
+      figures: {
+        lead: { value: "130,000+", label: "builds and deployments, every day" },
+        service: [
+          { value: "1,300+", label: "microservices", line: "k8s" as LineId },
+          { value: "3,000+", label: "developers" },
+          { value: "100k+", label: "workflow jobs / day", line: "cicd" as LineId },
+          { value: "<10 s", label: "runner availability", line: "cloud" as LineId },
+        ],
+      },
       bullets: [
         "Operate and scale Orbit's multi-cluster Kubernetes platform powering cloud connectivity for BMW vehicles and hundreds of internal microservices.",
         "Run a global CI/CD service on GitHub Enterprise and self-hosted runners executing 100k+ workflow jobs/day with runner availability under 10 seconds.",
@@ -64,6 +79,7 @@ export const siteConfig = {
       company: "SONAE MC",
       title: "Data, Cloud & DevOps Engineer",
       dateRange: "Jul 2023 - Nov 2023",
+      lines: ["cloud", "cicd", "data"] as LineId[],
       bullets: [
         "Built and managed Data Lakes, Data Hubs, Databricks and Data Factories on Microsoft Azure.",
         "Worked with Cloudera Hadoop across both cloud and on-premise environments.",
@@ -74,6 +90,8 @@ export const siteConfig = {
       company: "SONAE MC",
       title: "Big Data Engineer",
       dateRange: "Sep 2022 - May 2023",
+      lines: ["data"] as LineId[],
+      highlight: "Petabyte-scale data",
       bullets: [
         "Traineeship focused on developing and demonstrating skills across the Big Data area.",
         "Worked with petabyte-scale data solutions supporting SONAE's businesses.",
@@ -85,6 +103,7 @@ export const siteConfig = {
       school: "University of Minho",
       degree: "Integrated Master's (M.Sc.) in Informatics Engineering",
       dateRange: "2015 - 2021",
+      lines: ["data"] as LineId[],
       achievements: [
         "Specialized in Software Development, Databases and Cyber-security",
         "Focus on Data Engineering and Cryptography",
@@ -95,7 +114,8 @@ export const siteConfig = {
       school: "Escola Secundária de Maximinos",
       degree: "Secondary Education — Sciences and Technologies",
       dateRange: "2015",
-      achievements: [],
+      lines: [] as LineId[],
+      achievements: [] as string[],
     },
   ],
 };

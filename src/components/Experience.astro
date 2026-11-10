@@ -1,74 +1,142 @@
 ---
 import { siteConfig } from "../config";
-const hasExperience = siteConfig.experience && siteConfig.experience.length > 0;
+import { formatRange } from "../network";
+import SectionSign from "./SectionSign.astro";
+import Station from "./Station.astro";
+import RouteBullet from "./RouteBullet.astro";
+
+const experience = siteConfig.experience ?? [];
 ---
 
 {
-  hasExperience && (
-    <section id="experience" class="p-8 sm:p-12 md:p-16 lg:p-24">
-      <div>
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
-          <div class="lg:col-span-4">
-            <h2 class="text-3xl sm:text-4xl md:text-5xl xl:text-7xl font-bold text-gray-900">
-              Experience
-            </h2>
-            <div
-              class="w-[75px] h-[5px] mt-2 rounded-full"
-              style={`background-color: ${siteConfig.accentColor}`}
-            />
-          </div>
+  experience.length > 0 && (
+    <section aria-labelledby="experience">
+      <SectionSign id="experience" title="Experience" draw hidden />
 
-          <div class="lg:col-span-8">
-            <div class="relative">
-              {siteConfig.experience.map((exp, index) => (
-                <div class="relative mb-12 last:mb-0">
-                  {/* Timeline dot at top of card */}
-                  <div
-                    class="absolute left-1/2 -top-2 w-4 h-4 bg-white border-2 rounded-full -translate-x-1/2 z-20 transition-all duration-300"
-                    style={`border-color: ${siteConfig.accentColor}; background-color: ${siteConfig.accentColor}`}
-                  />
+      {experience.map((exp, index) => (
+        <Station row={`exp:${index}`} number={String(index + 1).padStart(2, "0")} lines={exp.lines} draw={index === 0} drawDelay={260} compact={index === 0}>
+          <Fragment slot="head">
+            <h3 class="st-name">
+              <span>{exp.company}</span>
+              <span class="served">
+                {exp.lines.map((l) => <RouteBullet line={l} />)}
+              </span>
+            </h3>
+          </Fragment>
 
-                  {/* Connecting line below card */}
-                  {index < siteConfig.experience.length - 1 && (
-                    <div class="absolute left-1/2 bottom-0 w-0.5 h-12 bg-gray-300 -translate-x-1/2 translate-y-full z-10" />
-                  )}
+          <p class="st-meta">
+            <span class="role">{exp.title}</span>
+            <span class="sep" aria-hidden="true">·</span>
+            <span class="figure-num">{formatRange(exp.dateRange)}</span>
+          </p>
 
-                  {/* Experience card */}
-                  <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-4 sm:p-5 md:p-6 hover:shadow-md transition-shadow duration-300">
-                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
-                      <div>
-                        <h3 class="text-lg sm:text-xl font-semibold text-gray-900">
-                          {exp.title}
-                        </h3>
-                        <p
-                          class="text-base sm:text-lg"
-                          style={`color: ${siteConfig.accentColor}`}
-                        >
-                          {exp.company}
-                        </p>
-                      </div>
-                      <span class="text-xs sm:text-sm text-gray-500 mt-2 sm:mt-0">
-                        {exp.dateRange}
-                      </span>
-                    </div>
-
-                    <ul class="space-y-2">
-                      {exp.bullets.map((bullet) => (
-                        <li class="flex items-start">
-                          <span class="inline-block w-1.5 h-1.5 rounded-full bg-gray-400 mt-2 mr-3 flex-shrink-0" />
-                          <span class="text-sm sm:text-base text-gray-600">
-                            {bullet}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
+          {"figures" in exp && exp.figures && (
+            <div class="platform-sign">
+              <p class="lead">
+                <span class="lead-value figure-num">{exp.figures.lead.value}</span>
+                <span class="lead-label">{exp.figures.lead.label}</span>
+              </p>
+              <dl class="service">
+                {exp.figures.service.map((f) => (
+                  <div>
+                    <dt>{f.label}</dt>
+                    <dd class="figure-num">
+                      {"line" in f && f.line && <RouteBullet line={f.line} />}
+                      {f.value}
+                    </dd>
                   </div>
-                </div>
-              ))}
+                ))}
+              </dl>
             </div>
-          </div>
-        </div>
-      </div>
+          )}
+
+          {"highlight" in exp && exp.highlight && <p class="highlight">{exp.highlight}</p>}
+
+          <ul class="ticks">
+            {exp.bullets.map((b) => (
+              <li>{b}</li>
+            ))}
+          </ul>
+        </Station>
+      ))}
     </section>
   )
 }
+
+<style>
+  /* Platform sign: the system's posted figures. */
+  .platform-sign {
+    margin-top: clamp(1.5rem, 3vw, 2rem);
+  }
+
+  .lead {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .lead-value {
+    font-size: clamp(3.75rem, 14.5vw, 11rem);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 0.86;
+    margin-left: -0.04em;
+  }
+
+  .lead-label {
+    margin-top: clamp(0.5rem, 1.2vw, 1rem);
+    font-size: clamp(1.25rem, 2.6vw, 2.25rem);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1.15;
+  }
+
+  .service {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem 1rem;
+    margin-top: clamp(1rem, 2vw, 1.5rem);
+    padding-top: 0.875rem;
+    border-top: 3px solid var(--color-ink);
+  }
+
+  @media (min-width: 64rem) {
+    .service {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  .service div {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: flex-end;
+  }
+
+  .service dd {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: clamp(1.75rem, 3.6vw, 3.25rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1;
+  }
+
+  .service dd :global(.bullet) {
+    font-size: 0.5em;
+  }
+
+  .service dt {
+    margin-top: 0.375rem;
+    font-size: clamp(1rem, 1.5vw, 1.25rem);
+    font-weight: 500;
+    color: var(--color-mute);
+  }
+
+  .highlight {
+    margin-top: 1.25rem;
+    font-size: clamp(1.375rem, 2.4vw, 1.75rem);
+    font-weight: 700;
+    letter-spacing: -0.015em;
+  }
+
+</style>

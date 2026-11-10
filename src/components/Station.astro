@@ -1,0 +1,216 @@
+---
+import type { LineId } from "../config";
+import { laneGroups, laneIndex } from "../network";
+import Lanes from "./Lanes.astro";
+
+interface Props {
+  /** Row key from the route plan in src/network.ts. */
+  row: string;
+  /** Station number shown in the margin column. */
+  number?: string;
+  /** Lines serving this stop. */
+  lines: LineId[];
+  /** express = white interchange pill; local = black dots. A stop with no lines gets an off-line ring. */
+  kind?: "express" | "local";
+  draw?: boolean;
+  drawDelay?: number;
+  /** Tighter top spacing for the first stop under a sign. */
+  compact?: boolean;
+}
+
+const { row, number, lines, kind = "express", draw = false, drawDelay = 0, compact = false } = Astro.props;
+const groups = laneGroups(lines);
+const dots = lines.map(laneIndex).sort((a, b) => a - b);
+const first = groups[0]?.from ?? 0;
+const last = groups[groups.length - 1]?.to ?? 0;
+const offLine = lines.length === 0;
+---
+
+<article class:list={["station net-row", kind, { compact }]}>
+  <Lanes row={row} draw={draw} delay={drawDelay} />
+
+  <div class="stop-row">
+    <div class="num figure-num" aria-hidden="true">{number}</div>
+    <div class="rail-cell" aria-hidden="true">
+      {offLine && <span class="ring" />}
+      {
+        !offLine && kind === "express" && (
+          <>
+            {groups.length > 1 && <span class="link" style={`--from:${first}; --to:${last}`} />}
+            {groups.map((g) => (
+              <span class="pill" style={`--from:${g.from}; --to:${g.to}`} />
+            ))}
+          </>
+        )
+      }
+      {
+        !offLine && kind === "local" && (
+          <>
+            {dots.length > 1 && <span class="link" style={`--from:${first}; --to:${last}`} />}
+            {dots.map((i) => (
+              <span class="dot" style={`--i:${i}`} />
+            ))}
+          </>
+        )
+      }
+      <span class:list={["tick", { "from-ring": offLine }]} style={`--to:${last}`} />
+    </div>
+    <div class="head">
+      <slot name="head" />
+    </div>
+  </div>
+
+  <div class="net-content body">
+    <slot />
+  </div>
+</article>
+
+<style>
+  .station {
+    --pad-top: 3rem;
+    --split-y: calc(var(--pad-top) + var(--st-line) / 2);
+    padding-top: var(--pad-top);
+    padding-bottom: 2.5rem;
+  }
+
+  .station.local {
+    --pad-top: 2.25rem;
+    padding-bottom: 2rem;
+  }
+
+  .station.compact {
+    --pad-top: 2.5rem;
+  }
+
+  @media (min-width: 48rem) {
+    .station {
+      --pad-top: 4.5rem;
+      padding-bottom: 3.5rem;
+    }
+
+    .station.local {
+      --pad-top: 3.25rem;
+      padding-bottom: 2.5rem;
+    }
+
+    .station.compact {
+      --pad-top: 2.75rem;
+    }
+  }
+
+  /* The head row pins number and stop to the first line of the station name. */
+  .stop-row {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: subgrid;
+    align-items: start;
+  }
+
+  .num {
+    grid-column: 1;
+    display: grid;
+    place-items: center;
+    height: var(--st-line);
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  @media (min-width: 48rem) {
+    .num {
+      font-size: 1.875rem;
+    }
+  }
+
+  .rail-cell {
+    grid-column: 2;
+    position: relative;
+    height: var(--st-line);
+  }
+
+  .pill,
+  .link,
+  .dot,
+  .ring,
+  .tick {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .pill {
+    z-index: 2;
+    left: calc(var(--lane-x0) + var(--from) * var(--lane-gap) - var(--stroke) / 2 - var(--pill-pad));
+    width: calc((var(--to) - var(--from)) * var(--lane-gap) + var(--stroke) + 2 * var(--pill-pad));
+    height: var(--pill-h);
+    background: var(--color-paper);
+    border: var(--pill-border) solid var(--color-ink);
+    border-radius: 999px;
+  }
+
+  /* Transfer connector between separate pills or dots; passing lines stay visible over it. */
+  .link {
+    z-index: -1;
+    left: calc(var(--lane-x0) + var(--from) * var(--lane-gap));
+    width: calc((var(--to) - var(--from)) * var(--lane-gap));
+    height: var(--tick);
+    background: var(--color-ink);
+  }
+
+  .dot {
+    --size: calc(var(--stroke) + var(--pill-border) * 2 + 0.25rem);
+    z-index: 2;
+    left: calc(var(--lane-x0) + var(--i) * var(--lane-gap) - var(--size) / 2);
+    width: var(--size);
+    height: var(--size);
+    border-radius: 50%;
+    background: var(--color-ink);
+  }
+
+  /* A stop off the coloured lines: a station ring on its own. */
+  .ring {
+    --size: var(--pill-h);
+    z-index: 2;
+    left: calc(var(--lane-x0) - var(--size) / 2);
+    width: var(--size);
+    height: var(--size);
+    border-radius: 50%;
+    background: var(--color-paper);
+    border: var(--pill-border) solid var(--color-ink);
+  }
+
+  .tick {
+    z-index: 1;
+    left: calc(var(--lane-x0) + var(--to) * var(--lane-gap) + var(--stroke) / 2 + var(--pill-pad));
+    right: 0;
+    height: var(--tick);
+    background: var(--color-ink);
+  }
+
+  .local .tick {
+    left: calc(var(--lane-x0) + var(--to) * var(--lane-gap));
+  }
+
+  /* An off-line connector crosses passing lanes underneath, so it never reads as a stop. */
+  .tick.from-ring {
+    left: calc(var(--lane-x0) + var(--pill-h) / 2);
+    z-index: -1;
+  }
+
+  .head {
+    grid-column: 3;
+    padding-left: var(--gutter);
+    padding-right: 1.25rem;
+    min-width: 0;
+  }
+
+  @media (min-width: 48rem) {
+    .head {
+      padding-right: 2.5rem;
+    }
+  }
+
+  .body {
+    grid-column: 3;
+  }
+</style>
