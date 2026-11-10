@@ -14,3 +14,7 @@ dist/
 *.log
 .vscode/
 .idea/
+
+# Impeccable design-process working files (surface briefs are committed)
+.impeccable/*
+!.impeccable/surfaces/

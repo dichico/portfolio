@@ -1,0 +1,75 @@
+---
+import { lines, laneStates } from "../network";
+
+interface Props {
+  /** Row key from the route plan in src/network.ts. */
+  row: string;
+  /** Animate the lines drawing downward (first viewport only). */
+  draw?: boolean;
+  /** Delay offset for the draw animation, in ms. */
+  delay?: number;
+}
+
+const { row, draw = false, delay = 0 } = Astro.props;
+const states = laneStates(row);
+---
+
+<div class:list={["lanes", { draw }]} aria-hidden="true">
+  {
+    lines.map(
+      (line, i) =>
+        states[i] !== "off" && (
+          <span
+            class:list={["lane", states[i]]}
+            style={`--i:${i}; --c:${line.color}; --d:${delay + i * 90}ms`}
+          />
+        ),
+    )
+  }
+</div>
+
+<style>
+  .lanes {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: var(--margin-col);
+    width: var(--rail-col);
+    pointer-events: none;
+  }
+
+  .lane {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: calc(var(--lane-x0) + var(--i) * var(--lane-gap) - var(--stroke) / 2);
+    width: var(--stroke);
+    background: var(--c);
+  }
+
+  /* A line ending or starting at this row's stop meets it at the stop's centre. */
+  .upper {
+    bottom: auto;
+    height: var(--split-y, 50%);
+  }
+
+  .lower {
+    top: var(--split-y, 50%);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .draw .lane {
+      transform-origin: top;
+      animation: lane-draw 900ms cubic-bezier(0.16, 1, 0.3, 1) var(--d) both;
+    }
+  }
+
+  @keyframes lane-draw {
+    from {
+      transform: scaleY(0);
+    }
+    to {
+      transform: scaleY(1);
+    }
+  }
+</style>

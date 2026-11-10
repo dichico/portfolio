@@ -1,0 +1,48 @@
+---
+import type { LineId } from "../config";
+import { lineById } from "../network";
+
+interface Props {
+  line: LineId;
+  size?: "sm" | "md";
+  /** Announce the line name to assistive tech (off when a visible label sits beside it). */
+  label?: boolean;
+}
+
+const { line, size = "sm", label = true } = Astro.props;
+const l = lineById[line];
+---
+
+<span
+  class:list={["bullet", size]}
+  style={`--c:${l.color}; --ink:${l.ink}`}
+  role={label ? "img" : undefined}
+  aria-label={label ? `${l.label} line` : undefined}
+  aria-hidden={label ? undefined : "true"}
+>{l.letter}</span>
+
+<style>
+  .bullet {
+    display: inline-grid;
+    place-items: center;
+    flex: none;
+    border-radius: 50%;
+    background: var(--c);
+    color: var(--ink);
+    font-weight: 700;
+    line-height: 1;
+    font-stretch: 100%;
+  }
+
+  .sm {
+    width: 1.125em;
+    height: 1.125em;
+    font-size: max(0.875rem, 0.55em);
+  }
+
+  .md {
+    width: var(--bullet);
+    height: var(--bullet);
+    font-size: calc(var(--bullet) * 0.52);
+  }
+</style>

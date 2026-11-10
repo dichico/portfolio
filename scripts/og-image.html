@@ -1,0 +1,83 @@
+<!doctype html>
+<!--
+  Source for public/og-image.png (1200x630). Render with:
+  "/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge" --headless=new --disable-gpu \
+    --hide-scrollbars --window-size=1200,630 \
+    --screenshot=<abs>/public/og-image.png file://<abs>/scripts/og-image.html
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>og-image</title>
+<style>
+  @font-face {
+    font-family: 'Archivo Variable';
+    font-style: normal;
+    font-weight: 100 900;
+    src: url(../node_modules/@fontsource-variable/archivo/files/archivo-latin-wght-normal.woff2) format('woff2-variations');
+  }
+  :root {
+    --paper: #ffffff;
+    --ink: #111111;
+    --a: #0039A6;
+    --k: #00843D;
+    --c: #FF6319;
+    --d: #FCCC0A;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 1200px; height: 630px; overflow: hidden;
+    background: var(--paper); color: var(--ink);
+    font-family: 'Archivo Variable', 'Helvetica Neue', Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .abs { position: absolute; }
+  .band { left: 0; top: 0; width: 1200px; height: 290px; background: var(--ink); color: #fff; }
+  .rule { left: 0; top: 290px; width: 1200px; height: 6px; background: var(--ink); }
+  .domain { right: 56px; top: 28px; font-size: 22px; font-weight: 500; letter-spacing: 0; color: #fff; }
+  .name { left: 62px; top: 70px; font-size: 92px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; white-space: nowrap; color: #fff; }
+  .role { left: 330px; top: 194px; font-size: 38px; font-weight: 500; letter-spacing: -0.005em; line-height: 1; white-space: nowrap; color: #fff; }
+  .bullet {
+    width: 52px; height: 52px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 30px; font-weight: 700; line-height: 1; color: #fff;
+  }
+  .legend { width: 80px; text-align: center; font-size: 17px; font-weight: 500; line-height: 1; color: #fff; }
+  .fig { left: 370px; top: 312px; font-size: 182px; font-weight: 700; letter-spacing: -0.04em; line-height: 1; white-space: nowrap; }
+  .figcap { left: 380px; top: 516px; font-size: 38px; font-weight: 500; letter-spacing: -0.005em; line-height: 1; white-space: nowrap; }
+</style>
+</head>
+<body>
+  <!-- Route lines through the white field (45° jog only) -->
+  <svg class="abs" style="left:0;top:0" width="1200" height="630" viewBox="0 0 1200 630" aria-hidden="true">
+    <g fill="none" stroke-width="16" stroke-linecap="butt" stroke-linejoin="miter">
+      <path d="M92 290 V630" stroke="#0039A6"/>
+      <path d="M152 290 V630" stroke="#00843D"/>
+      <path d="M212 290 V630" stroke="#FF6319"/>
+      <path d="M272 290 V490 L312 530 V630" stroke="#FCCC0A"/>
+    </g>
+    <!-- Station: white pill, black outline, tick toward the figure -->
+    <rect x="66" y="392" width="232" height="44" rx="22" fill="#fff" stroke="#111" stroke-width="7"/>
+    <rect x="298" y="410" width="58" height="8" fill="#111"/>
+  </svg>
+
+  <div class="abs band"></div>
+  <div class="abs rule"></div>
+  <div class="abs domain">portfolio.dichico.com</div>
+  <div class="abs name">Diogo Francisco Costa</div>
+
+  <div class="abs bullet" style="left:66px;top:188px;background:var(--a)">A</div>
+  <div class="abs bullet" style="left:126px;top:188px;background:var(--k)">K</div>
+  <div class="abs bullet" style="left:186px;top:188px;background:var(--c)">C</div>
+  <div class="abs bullet" style="left:246px;top:188px;background:var(--d);color:var(--ink)">D</div>
+  <div class="abs legend" style="left:52px;top:254px">Cloud</div>
+  <div class="abs legend" style="left:112px;top:254px">K8s</div>
+  <div class="abs legend" style="left:172px;top:254px">CI/CD</div>
+  <div class="abs legend" style="left:232px;top:254px">Data</div>
+
+  <div class="abs role">DevOps Cloud Platform Engineer</div>
+
+  <div class="abs fig">130,000+</div>
+  <div class="abs figcap">builds and deployments, every day</div>
+</body>
+</html>
