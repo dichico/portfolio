@@ -16,7 +16,7 @@ stations, and the scale figures sit on the platform sign.
 - **Tailwind CSS 4** — styling
 - **Archivo** variable font — self-hosted via Fontsource (`@fontsource-variable/archivo`)
 - **Cloudflare Workers Static Assets** — assets-only Worker, no server code
-- **GitHub Actions** — automated build & deploy with the [`cf` CLI](https://developers.cloudflare.com/cf/)
+- **Cloudflare Workers Builds** — Git-connected build & deploy with the [`cf` CLI](https://developers.cloudflare.com/cf/)
 - All content lives in a single file: [`src/config.ts`](src/config.ts)
 
 ## Run locally
@@ -31,11 +31,22 @@ npm run deploy   # build + deploy to Cloudflare (needs `cf auth login`)
 
 ## Deploy
 
-Pushes to `main` build the site and deploy `dist/` with `cf deploy dist`;
-pull requests only run a credential-free `--dry-run`. The workflow needs two
-repository secrets: `CLOUDFLARE_API_TOKEN` (an "Edit Cloudflare Workers" token
-scoped to the account and the `dichico.com` zone) and `CLOUDFLARE_ACCOUNT_ID`.
-The Worker name and custom domain live in `cloudflare.config.ts`.
+CI/CD runs on [Cloudflare Workers Builds](https://developers.cloudflare.com/workers/ci-cd/builds/):
+the `portfolio-site` Worker is connected to this repository, so pushes to
+`main` deploy to production and other branches get a
+[Preview](https://developers.cloudflare.com/workers/previews/) URL (posted as a
+PR comment). Build settings (Worker → **Settings** → **Builds**):
+
+| Setting         | Value                          |
+| --------------- | ------------------------------ |
+| Git branch      | `main`                         |
+| Build command   | `npm run build`                |
+| Deploy command  | `npx cf deploy dist`           |
+| Preview command | `npx cf previews deploy dist`  |
+| Root directory  | `/`                            |
+
+The Node version comes from `.node-version`. The Worker name and custom domain
+live in `cloudflare.config.ts`; the Worker name in the dashboard must match.
 
 ## Structure
 
@@ -51,7 +62,7 @@ PRODUCT.md, DESIGN.md   product and design-system notes
 .impeccable/surfaces/   design brief
 astro.config.mjs        site URL + sitemap + Tailwind
 cloudflare.config.ts    Worker name + custom domain for Cloudflare
-.github/workflows/deploy.yml   CI build + deploy to Cloudflare Workers
+.node-version           Node.js version for Workers Builds
 ```
 
 ## License
