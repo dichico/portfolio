@@ -33,16 +33,16 @@ npm run deploy   # build + deploy to Cloudflare (needs `cf auth login`)
 
 CI/CD runs on [Cloudflare Workers Builds](https://developers.cloudflare.com/workers/ci-cd/builds/):
 the `portfolio-site` Worker is connected to this repository, so pushes to
-`main` deploy to production and other branches get a
-[Preview](https://developers.cloudflare.com/workers/previews/) URL (posted as a
-PR comment). Build settings (Worker → **Settings** → **Builds**):
+`main` deploy to production and other branches run a credential-free build +
+`--dry-run` validation, reported as the required `Workers Builds: portfolio-site`
+PR check. Build settings (Worker → **Settings** → **Builds**):
 
 | Setting         | Value                          |
 | --------------- | ------------------------------ |
 | Git branch      | `main`                         |
 | Build command   | `npm run build`                |
 | Deploy command  | `npx cf deploy dist`           |
-| Preview command | `npx cf previews deploy dist`  |
+| Preview command | `npx cf deploy dist --dry-run` |
 | Root directory  | `/`                            |
 
 The Node version comes from `.node-version`. The Worker name and custom domain
@@ -51,7 +51,7 @@ live in `cloudflare.config.ts`; the Worker name in the dashboard must match.
 ## Structure
 
 ```
-public/                 static assets (favicon.svg, og-image.png, robots.txt)
+public/                 static assets (favicon.svg, og-image.png, robots.txt) + _headers (security headers)
 src/
   components/           page sections and the route-line system
   config.ts             site content (name, about, skills, projects, experience, education)
