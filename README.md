@@ -51,7 +51,7 @@ live in `cloudflare.config.ts`; the Worker name in the dashboard must match.
 ## Structure
 
 ```
-public/                 static assets (favicon.svg, og-image.png, robots.txt)
+public/                 static assets (favicon.svg, og-image.png, robots.txt) + _headers (security headers)
 src/
   components/           page sections and the route-line system
   config.ts             site content (name, about, skills, projects, experience, education)
